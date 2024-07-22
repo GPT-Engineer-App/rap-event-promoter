@@ -2,8 +2,22 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
+import ArtistProfile from "@/components/ArtistProfile";
 
 const Index = () => {
+  const artists = [
+    {
+      name: "Artist 1",
+      bio: "Artist 1 is known for their dynamic style and powerful lyrics. They have been a major influence in the rap scene for over a decade.",
+      imageUrl: "/placeholder.svg",
+    },
+    {
+      name: "Artist 2",
+      bio: "Artist 2 brings a fresh perspective to the genre with their innovative beats and compelling storytelling.",
+      imageUrl: "/placeholder.svg",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="bg-primary text-primary-foreground py-6 text-center">
@@ -31,7 +45,9 @@ const Index = () => {
 
         <section id="artist-profiles" className="mb-12">
           <h2 className="text-3xl font-semibold mb-4">Artists</h2>
-          {/* Artist profiles will be added here */}
+          {artists.map((artist, index) => (
+            <ArtistProfile key={index} {...artist} />
+          ))}
         </section>
 
         <section id="ticket-sales" className="mb-12">
