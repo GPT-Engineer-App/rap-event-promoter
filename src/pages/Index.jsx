@@ -5,7 +5,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarIcon, Clock, MapPin, Facebook, Twitter, Instagram, Youtube } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
 
 const Index = () => {
@@ -54,7 +53,6 @@ const Index = () => {
       ...prevData,
       [name]: value,
     }));
-    // Clear the error for this field as the user types
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: "",
@@ -75,10 +73,8 @@ const Index = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Here you would typically send the form data to your backend
       console.log("Form submitted:", formData);
       toast.success("Tickets purchased successfully!");
-      // Reset form after successful submission
       setFormData({ name: "", email: "", tickets: "" });
     } else {
       toast.error("Please correct the errors in the form.");
@@ -91,7 +87,6 @@ const Index = () => {
       ...prevData,
       [name]: value,
     }));
-    // Clear the error for this field as the user types
     setContactErrors((prevErrors) => ({
       ...prevErrors,
       [name]: "",
@@ -111,10 +106,8 @@ const Index = () => {
   const handleContactSubmit = (e) => {
     e.preventDefault();
     if (validateContactForm()) {
-      // Here you would typically send the form data to your backend
       console.log("Contact form submitted:", contactForm);
       toast.success("Message sent successfully!");
-      // Reset form after successful submission
       setContactForm({ name: "", email: "", message: "" });
     } else {
       toast.error("Please correct the errors in the form.");
@@ -124,16 +117,16 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       <header className="bg-primary text-primary-foreground py-8 text-center">
-        <h1 className="text-5xl font-extrabold">Rap Event at The Bar</h1>
+        <h1 className="text-3xl md:text-5xl font-extrabold">Rap Event at The Bar</h1>
       </header>
 
-      <nav className="bg-secondary sticky top-0 z-10 shadow-md">
-        <div className="container mx-auto flex justify-center space-x-6 py-4">
-          <Link to="#event-details" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium">Event Details</Link>
-          <Link to="#artist-profiles" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium">Artists</Link>
-          <Link to="#ticket-sales" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium">Tickets</Link>
-          <Link to="#contact" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium">Contact</Link>
-          <Link to="#social-media" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium">Social Media</Link>
+      <nav className="bg-secondary sticky top-16 z-10 shadow-md">
+        <div className="container mx-auto flex justify-center space-x-2 md:space-x-6 py-4 overflow-x-auto">
+          <Link to="#event-details" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Event Details</Link>
+          <Link to="#artist-profiles" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Artists</Link>
+          <Link to="#ticket-sales" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Tickets</Link>
+          <Link to="#contact" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Contact</Link>
+          <Link to="#social-media" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Social Media</Link>
         </div>
       </nav>
 
@@ -141,22 +134,22 @@ const Index = () => {
         <section id="event-details" className="mb-16">
           <Card>
             <CardHeader>
-              <CardTitle className="text-3xl font-semibold text-primary">Event Details</CardTitle>
+              <CardTitle className="text-2xl md:text-3xl font-semibold text-primary">Event Details</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center space-x-2">
                 <CalendarIcon className="text-primary" />
-                <p className="text-lg"><span className="font-semibold">Date:</span> July 30, 2024</p>
+                <p className="text-base md:text-lg"><span className="font-semibold">Date:</span> July 30, 2024</p>
               </div>
               <div className="flex items-center space-x-2">
                 <Clock className="text-primary" />
-                <p className="text-lg"><span className="font-semibold">Time:</span> 8:00 PM - 12:00 AM</p>
+                <p className="text-base md:text-lg"><span className="font-semibold">Time:</span> 8:00 PM - 12:00 AM</p>
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="text-primary" />
-                <p className="text-lg"><span className="font-semibold">Venue:</span> The Bar, 123 Main Street, Downtown</p>
+                <p className="text-base md:text-lg"><span className="font-semibold">Venue:</span> The Bar, 123 Main Street, Downtown</p>
               </div>
-              <p className="text-lg mt-4">
+              <p className="text-base md:text-lg mt-4">
                 Get ready for an electrifying night of rap music at The Bar! Our annual Rap Event brings together the hottest local and national rap artists for an unforgettable evening of beats, rhymes, and energy. From up-and-coming talents to established stars, this event showcases the best of the rap scene. Don't miss out on this chance to experience live performances, connect with fellow rap enthusiasts, and be part of the vibrant hip-hop community. Mark your calendars and secure your spot for the most anticipated rap event of the year!
               </p>
             </CardContent>
@@ -164,7 +157,7 @@ const Index = () => {
         </section>
 
         <section id="artist-profiles" className="mb-16">
-          <h2 className="text-3xl font-semibold mb-6 text-primary">Featured Artists</h2>
+          <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-primary">Featured Artists</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {artists.map((artist, index) => (
               <Card key={index} className="overflow-hidden">
@@ -172,7 +165,7 @@ const Index = () => {
                   <div className="aspect-video relative">
                     <img src={artist.image} alt={artist.name} className="object-cover w-full h-full" />
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                      <CardTitle className="text-white text-2xl">{artist.name}</CardTitle>
+                      <CardTitle className="text-white text-xl md:text-2xl">{artist.name}</CardTitle>
                     </div>
                   </div>
                 </CardHeader>
@@ -185,9 +178,9 @@ const Index = () => {
           </div>
         </section>
 
-        <section id="ticket-sales" className="mb-16 bg-card p-8 rounded-lg shadow-lg">
-          <h2 className="text-3xl font-semibold mb-6 text-primary">Buy Tickets</h2>
-          <p className="mb-6 text-lg">Get your tickets now before they sell out!</p>
+        <section id="ticket-sales" className="mb-16 bg-card p-4 md:p-8 rounded-lg shadow-lg">
+          <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-primary">Buy Tickets</h2>
+          <p className="mb-6 text-base md:text-lg">Get your tickets now before they sell out!</p>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block mb-2 font-medium">Name:</label>
@@ -234,8 +227,8 @@ const Index = () => {
           </form>
         </section>
 
-        <section id="contact" className="mb-16 bg-card p-8 rounded-lg shadow-lg">
-          <h2 className="text-3xl font-semibold mb-6 text-primary">Contact Us</h2>
+        <section id="contact" className="mb-16 bg-card p-4 md:p-8 rounded-lg shadow-lg">
+          <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-primary">Contact Us</h2>
           <form onSubmit={handleContactSubmit} className="space-y-6">
             <div>
               <label htmlFor="contact-name" className="block mb-2 font-medium">Name:</label>
@@ -280,9 +273,9 @@ const Index = () => {
           </form>
         </section>
 
-        <section id="social-media" className="mb-16 bg-card p-8 rounded-lg shadow-lg">
-          <h2 className="text-3xl font-semibold mb-6 text-primary">Follow Us</h2>
-          <p className="mb-6 text-lg">Stay connected and get the latest updates:</p>
+        <section id="social-media" className="mb-16 bg-card p-4 md:p-8 rounded-lg shadow-lg">
+          <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-primary">Follow Us</h2>
+          <p className="mb-6 text-base md:text-lg">Stay connected and get the latest updates:</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {socialMediaLinks.map((link, index) => (
               <a
@@ -293,7 +286,7 @@ const Index = () => {
                 className="flex items-center justify-center gap-2 p-4 bg-secondary rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors duration-200"
               >
                 {link.icon}
-                <span>{link.name}</span>
+                <span className="hidden md:inline">{link.name}</span>
               </a>
             ))}
           </div>
@@ -301,7 +294,7 @@ const Index = () => {
       </main>
 
       <footer className="bg-primary text-primary-foreground py-6 text-center">
-        <p className="text-lg">&copy; 2024 The Bar. All rights reserved.</p>
+        <p className="text-base md:text-lg">&copy; 2024 The Bar. All rights reserved.</p>
       </footer>
     </div>
   );
