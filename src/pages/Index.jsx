@@ -4,8 +4,27 @@ import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarIcon, Clock, MapPin } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Index = () => {
+  const artists = [
+    {
+      name: "MC Rhyme",
+      image: "/images/mc-rhyme.jpg",
+      bio: "MC Rhyme is known for his quick wit and clever wordplay. With over a decade in the game, he's become a staple in the underground rap scene.",
+    },
+    {
+      name: "DJ Beats",
+      image: "/images/dj-beats.jpg",
+      bio: "DJ Beats brings the heat with her innovative mixes and crowd-pumping energy. She's collaborated with some of the biggest names in hip-hop.",
+    },
+    {
+      name: "Lyrical Genius",
+      image: "/images/lyrical-genius.jpg",
+      bio: "Lyrical Genius lives up to his name with introspective verses and thought-provoking lyrics. His albums have garnered critical acclaim.",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       <header className="bg-primary text-primary-foreground py-8 text-center">
@@ -48,9 +67,26 @@ const Index = () => {
           </Card>
         </section>
 
-        <section id="artist-profiles" className="mb-16 bg-card p-8 rounded-lg shadow-lg">
-          <h2 className="text-3xl font-semibold mb-6 text-primary">Artists</h2>
-          <p className="text-lg">Artist profiles coming soon...</p>
+        <section id="artist-profiles" className="mb-16">
+          <h2 className="text-3xl font-semibold mb-6 text-primary">Featured Artists</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {artists.map((artist, index) => (
+              <Card key={index} className="overflow-hidden">
+                <CardHeader className="p-0">
+                  <div className="aspect-video relative">
+                    <img src={artist.image} alt={artist.name} className="object-cover w-full h-full" />
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                      <CardTitle className="text-white text-2xl">{artist.name}</CardTitle>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-4">
+                  <p className="text-sm text-muted-foreground mb-4">{artist.bio}</p>
+                  <Button variant="outline" className="w-full">Learn More</Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </section>
 
         <section id="ticket-sales" className="mb-16 bg-card p-8 rounded-lg shadow-lg">
