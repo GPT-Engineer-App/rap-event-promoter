@@ -8,7 +8,7 @@ export const MobileSheet = ({ navItems }) => (
     <SheetTrigger asChild>
       <Button variant="outline" size="icon" className="shrink-0 md:hidden">
         <Menu className="h-5 w-5" />
-        <span className="sr-only">Toggle navigation menu</span>
+        <span className="sr-only">Växla navigeringsmeny</span>
       </Button>
     </SheetTrigger>
     <SheetContent side="left">
@@ -18,7 +18,7 @@ export const MobileSheet = ({ navItems }) => (
           className="flex items-center gap-2 text-lg font-semibold"
         >
           <Package2 className="h-6 w-6" />
-          <span className="sr-only">Acme Inc</span>
+          <span className="sr-only">Burboun</span>
         </NavItem>
         {navItems.map((item) => (
           <NavItem key={item.to} to={item.to}>
