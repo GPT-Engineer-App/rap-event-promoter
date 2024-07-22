@@ -6,6 +6,25 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarIcon, Clock, MapPin, Facebook, Twitter, Instagram, Youtube } from "lucide-react";
 import { toast } from "sonner";
+import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
+import format from 'date-fns/format';
+import parse from 'date-fns/parse';
+import startOfWeek from 'date-fns/startOfWeek';
+import getDay from 'date-fns/getDay';
+import enUS from 'date-fns/locale/en-US';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+
+const locales = {
+  'en-US': enUS,
+}
+
+const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  locales,
+})
 
 const Index = () => {
   const [formData, setFormData] = useState({
@@ -114,6 +133,25 @@ const Index = () => {
     }
   };
 
+  // Sample events for the calendar
+  const events = [
+    {
+      title: 'Rapevenemang på Burboun',
+      start: new Date(2024, 6, 30, 20, 0), // July 30, 2024, 20:00
+      end: new Date(2024, 7, 1, 0, 0), // July 31, 2024, 00:00
+      allDay: false,
+    },
+    // Add more events as needed
+  ];
+
+  const handleSelectEvent = (event) => {
+    const { title, start, end } = event;
+    const startTime = format(start, 'yyyy-MM-dd\'T\'HH:mm:ss');
+    const endTime = format(end, 'yyyy-MM-dd\'T\'HH:mm:ss');
+    const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startTime}/${endTime}`;
+    window.open(googleCalendarUrl, '_blank');
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       <header className="bg-primary text-primary-foreground py-8 text-center">
@@ -124,6 +162,7 @@ const Index = () => {
         <div className="container mx-auto flex justify-center space-x-2 md:space-x-6 py-4 overflow-x-auto">
           <Link to="#event-details" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Evenemangsdetaljer</Link>
           <Link to="#artist-profiles" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Artister</Link>
+          <Link to="#event-calendar" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Evenemangskalender</Link>
           <Link to="#ticket-sales" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Biljetter</Link>
           <Link to="#contact" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Kontakt</Link>
           <Link to="#social-media" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Sociala Medier</Link>
@@ -176,6 +215,27 @@ const Index = () => {
               </Card>
             ))}
           </div>
+        </section>
+
+        <section id="event-calendar" className="mb-16">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-2xl md:text-3xl font-semibold text-primary">Evenemangskalender</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="h-[600px]">
+                <Calendar
+                  localizer={localizer}
+                  events={events}
+                  startAccessor="start"
+                  endAccessor="end"
+                  style={{ height: '100%' }}
+                  onSelectEvent={handleSelectEvent}
+                />
+              </div>
+              <p className="mt-4 text-sm text-muted-foreground">Klicka på ett evenemang för att lägga till det i din Google Kalender.</p>
+            </CardContent>
+          </Card>
         </section>
 
         <section id="ticket-sales" className="mb-16 bg-card p-4 md:p-8 rounded-lg shadow-lg">
