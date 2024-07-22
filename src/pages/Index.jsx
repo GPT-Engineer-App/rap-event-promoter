@@ -127,6 +127,7 @@ const Index = () => {
           <Link to="#ticket-sales" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Biljetter</Link>
           <Link to="#contact" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Kontakt</Link>
           <Link to="#social-media" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Sociala Medier</Link>
+          <Link to="/calendar" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Kalender</Link>
         </div>
       </nav>
 
