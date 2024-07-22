@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -5,8 +6,16 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarIcon, Clock, MapPin } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { toast } from "sonner";
 
 const Index = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    tickets: "",
+  });
+  const [errors, setErrors] = useState({});
+
   const artists = [
     {
       name: "MC Rhyme",
@@ -24,6 +33,43 @@ const Index = () => {
       bio: "Lyrical Genius lives up to his name with introspective verses and thought-provoking lyrics. His albums have garnered critical acclaim.",
     },
   ];
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    // Clear the error for this field as the user types
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.email.trim()) newErrors.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Email is invalid";
+    if (!formData.tickets.trim()) newErrors.tickets = "Number of tickets is required";
+    else if (isNaN(formData.tickets) || parseInt(formData.tickets) < 1) newErrors.tickets = "Please enter a valid number of tickets";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      // Here you would typically send the form data to your backend
+      console.log("Form submitted:", formData);
+      toast.success("Tickets purchased successfully!");
+      // Reset form after successful submission
+      setFormData({ name: "", email: "", tickets: "" });
+    } else {
+      toast.error("Please correct the errors in the form.");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
@@ -92,18 +138,47 @@ const Index = () => {
         <section id="ticket-sales" className="mb-16 bg-card p-8 rounded-lg shadow-lg">
           <h2 className="text-3xl font-semibold mb-6 text-primary">Buy Tickets</h2>
           <p className="mb-6 text-lg">Get your tickets now before they sell out!</p>
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block mb-2 font-medium">Name:</label>
-              <Input type="text" id="name" name="name" required className="w-full" />
+              <Input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                required
+                className={`w-full ${errors.name ? 'border-red-500' : ''}`}
+              />
+              {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
             </div>
             <div>
               <label htmlFor="email" className="block mb-2 font-medium">Email:</label>
-              <Input type="email" id="email" name="email" required className="w-full" />
+              <Input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+                className={`w-full ${errors.email ? 'border-red-500' : ''}`}
+              />
+              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
             </div>
             <div>
               <label htmlFor="tickets" className="block mb-2 font-medium">Number of Tickets:</label>
-              <Input type="number" id="tickets" name="tickets" min="1" max="10" required className="w-full" />
+              <Input
+                type="number"
+                id="tickets"
+                name="tickets"
+                value={formData.tickets}
+                onChange={handleInputChange}
+                min="1"
+                max="10"
+                required
+                className={`w-full ${errors.tickets ? 'border-red-500' : ''}`}
+              />
+              {errors.tickets && <p className="text-red-500 text-sm mt-1">{errors.tickets}</p>}
             </div>
             <Button type="submit" className="w-full">Buy Tickets</Button>
           </form>
