@@ -14,7 +14,7 @@ const App = () => {
         <Toaster />
         <Router>
           <Routes>
-            <Route path="/" element={<Layout />}>
+            <Route path="/" element={<Layout navItems={navItems} />}>
               {navItems.map((item) => (
                 <Route key={item.to} path={item.to} element={item.page} />
               ))}

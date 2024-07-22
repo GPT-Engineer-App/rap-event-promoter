@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { toast } from 'sonner';
 
 const locales = {
   'en-US': enUS,
@@ -30,10 +31,17 @@ const EventCalendar = () => {
     start: '',
     end: '',
   });
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleAddEvent = () => {
-    setEvents([...events, newEvent]);
-    setNewEvent({ title: '', start: '', end: '' });
+    if (newEvent.title && newEvent.start && newEvent.end) {
+      setEvents([...events, newEvent]);
+      setNewEvent({ title: '', start: '', end: '' });
+      setIsDialogOpen(false);
+      toast.success('Event added successfully!');
+    } else {
+      toast.error('Please fill in all fields.');
+    }
   };
 
   const handleSelectSlot = ({ start, end }) => {
@@ -42,18 +50,20 @@ const EventCalendar = () => {
       start,
       end,
     });
+    setIsDialogOpen(true);
   };
 
   const handleAddToPersonalCalendar = (event) => {
     const { title, start, end } = event;
     const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${start.toISOString().replace(/-|:|\.\d+/g, '')}/${end.toISOString().replace(/-|:|\.\d+/g, '')}`;
     window.open(googleCalendarUrl, '_blank');
+    toast.success('Event added to Google Calendar!');
   };
 
   return (
     <div className="h-screen p-4">
       <h2 className="text-2xl font-bold mb-4">Event Calendar</h2>
-      <Dialog>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
           <Button className="mb-4">Add New Event</Button>
         </DialogTrigger>
@@ -80,7 +90,7 @@ const EventCalendar = () => {
               <Input
                 id="start"
                 type="datetime-local"
-                value={newEvent.start}
+                value={newEvent.start ? format(new Date(newEvent.start), "yyyy-MM-dd'T'HH:mm") : ''}
                 onChange={(e) => setNewEvent({ ...newEvent, start: new Date(e.target.value) })}
                 className="col-span-3"
               />
@@ -92,7 +102,7 @@ const EventCalendar = () => {
               <Input
                 id="end"
                 type="datetime-local"
-                value={newEvent.end}
+                value={newEvent.end ? format(new Date(newEvent.end), "yyyy-MM-dd'T'HH:mm") : ''}
                 onChange={(e) => setNewEvent({ ...newEvent, end: new Date(e.target.value) })}
                 className="col-span-3"
               />
