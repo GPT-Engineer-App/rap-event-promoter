@@ -12,8 +12,8 @@ import { CircleUser } from "lucide-react";
 export const UserMenu = () => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
-      <Button variant="secondary" size="icon" className="rounded-full" aria-label="Öppna användarmeny">
-        <CircleUser className="h-5 w-5" aria-hidden="true" />
+      <Button variant="secondary" size="icon" className="rounded-full">
+        <CircleUser className="h-5 w-5" />
         <span className="sr-only">Växla användarmeny</span>
       </Button>
     </DropdownMenuTrigger>
