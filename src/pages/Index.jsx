@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CalendarIcon, Clock, MapPin } from "lucide-react";
 
 const Index = () => {
   return (
@@ -21,12 +23,29 @@ const Index = () => {
       </nav>
 
       <main className="container mx-auto px-4 py-12 flex-grow">
-        <section id="event-details" className="mb-16 bg-card p-8 rounded-lg shadow-lg">
-          <h2 className="text-3xl font-semibold mb-6 text-primary">Event Details</h2>
-          <p className="mb-2 text-lg"><span className="font-semibold">Date:</span> July 30, 2024</p>
-          <p className="mb-2 text-lg"><span className="font-semibold">Time:</span> 8:00 PM - 12:00 AM</p>
-          <p className="mb-2 text-lg"><span className="font-semibold">Venue:</span> The Bar, Downtown</p>
-          <p className="text-lg">Join us for an unforgettable night of rap music with top artists performing live!</p>
+        <section id="event-details" className="mb-16">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-3xl font-semibold text-primary">Event Details</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center space-x-2">
+                <CalendarIcon className="text-primary" />
+                <p className="text-lg"><span className="font-semibold">Date:</span> July 30, 2024</p>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Clock className="text-primary" />
+                <p className="text-lg"><span className="font-semibold">Time:</span> 8:00 PM - 12:00 AM</p>
+              </div>
+              <div className="flex items-center space-x-2">
+                <MapPin className="text-primary" />
+                <p className="text-lg"><span className="font-semibold">Venue:</span> The Bar, 123 Main Street, Downtown</p>
+              </div>
+              <p className="text-lg mt-4">
+                Get ready for an electrifying night of rap music at The Bar! Our annual Rap Event brings together the hottest local and national rap artists for an unforgettable evening of beats, rhymes, and energy. From up-and-coming talents to established stars, this event showcases the best of the rap scene. Don't miss out on this chance to experience live performances, connect with fellow rap enthusiasts, and be part of the vibrant hip-hop community. Mark your calendars and secure your spot for the most anticipated rap event of the year!
+              </p>
+            </CardContent>
+          </Card>
         </section>
 
         <section id="artist-profiles" className="mb-16 bg-card p-8 rounded-lg shadow-lg">
