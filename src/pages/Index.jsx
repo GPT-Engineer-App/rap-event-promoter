@@ -41,10 +41,10 @@ const Index = () => {
   ];
 
   const socialMediaLinks = [
-    { name: "Facebook", url: "https://facebook.com/rapatevent", icon: <Facebook className="w-6 h-6" /> },
-    { name: "Twitter", url: "https://twitter.com/rapatevent", icon: <Twitter className="w-6 h-6" /> },
-    { name: "Instagram", url: "https://instagram.com/rapatevent", icon: <Instagram className="w-6 h-6" /> },
-    { name: "YouTube", url: "https://youtube.com/rapatevent", icon: <Youtube className="w-6 h-6" /> },
+    { name: "Facebook", url: "https://facebook.com/rapatevent", icon: <Facebook className="w-6 h-6" aria-hidden="true" /> },
+    { name: "Twitter", url: "https://twitter.com/rapatevent", icon: <Twitter className="w-6 h-6" aria-hidden="true" /> },
+    { name: "Instagram", url: "https://instagram.com/rapatevent", icon: <Instagram className="w-6 h-6" aria-hidden="true" /> },
+    { name: "YouTube", url: "https://youtube.com/rapatevent", icon: <Youtube className="w-6 h-6" aria-hidden="true" /> },
   ];
 
   const handleInputChange = (e) => {
@@ -120,7 +120,7 @@ const Index = () => {
         <h1 className="text-3xl md:text-5xl font-extrabold">Rapevenemang på Burboun</h1>
       </header>
 
-      <nav className="bg-secondary sticky top-16 z-10 shadow-md">
+      <nav className="bg-secondary sticky top-16 z-10 shadow-md" aria-label="Huvudnavigering">
         <div className="container mx-auto flex justify-center space-x-2 md:space-x-6 py-4 overflow-x-auto">
           <Link to="#event-details" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Evenemangsdetaljer</Link>
           <Link to="#artist-profiles" className="text-secondary-foreground hover:text-primary transition-colors duration-200 font-medium whitespace-nowrap">Artister</Link>
@@ -138,15 +138,15 @@ const Index = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center space-x-2">
-                <CalendarIcon className="text-primary" />
+                <CalendarIcon className="text-primary" aria-hidden="true" />
                 <p className="text-base md:text-lg"><span className="font-semibold">Datum:</span> 30 juli 2024</p>
               </div>
               <div className="flex items-center space-x-2">
-                <Clock className="text-primary" />
+                <Clock className="text-primary" aria-hidden="true" />
                 <p className="text-base md:text-lg"><span className="font-semibold">Tid:</span> 20:00 - 00:00</p>
               </div>
               <div className="flex items-center space-x-2">
-                <MapPin className="text-primary" />
+                <MapPin className="text-primary" aria-hidden="true" />
                 <p className="text-base md:text-lg"><span className="font-semibold">Plats:</span> Burboun, Huvudgatan 123, Centrum</p>
               </div>
               <p className="text-base md:text-lg mt-4">
@@ -163,7 +163,7 @@ const Index = () => {
               <Card key={index} className="overflow-hidden">
                 <CardHeader className="p-0">
                   <div className="aspect-video relative">
-                    <img src={artist.image} alt={artist.name} className="object-cover w-full h-full" />
+                    <img src={artist.image} alt={`Bild på ${artist.name}`} className="object-cover w-full h-full" />
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
                       <CardTitle className="text-white text-xl md:text-2xl">{artist.name}</CardTitle>
                     </div>
@@ -171,7 +171,7 @@ const Index = () => {
                 </CardHeader>
                 <CardContent className="p-4">
                   <p className="text-sm text-muted-foreground mb-4">{artist.bio}</p>
-                  <Button variant="outline" className="w-full">Läs mer</Button>
+                  <Button variant="outline" className="w-full">Läs mer om {artist.name}</Button>
                 </CardContent>
               </Card>
             ))}
@@ -192,8 +192,10 @@ const Index = () => {
                 onChange={handleInputChange}
                 required
                 className={`w-full ${errors.name ? 'border-red-500' : ''}`}
+                aria-invalid={errors.name ? "true" : "false"}
+                aria-describedby={errors.name ? "name-error" : undefined}
               />
-              {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+              {errors.name && <p id="name-error" className="text-red-500 text-sm mt-1">{errors.name}</p>}
             </div>
             <div>
               <label htmlFor="email" className="block mb-2 font-medium">E-post:</label>
@@ -205,8 +207,10 @@ const Index = () => {
                 onChange={handleInputChange}
                 required
                 className={`w-full ${errors.email ? 'border-red-500' : ''}`}
+                aria-invalid={errors.email ? "true" : "false"}
+                aria-describedby={errors.email ? "email-error" : undefined}
               />
-              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+              {errors.email && <p id="email-error" className="text-red-500 text-sm mt-1">{errors.email}</p>}
             </div>
             <div>
               <label htmlFor="tickets" className="block mb-2 font-medium">Antal Biljetter:</label>
@@ -220,8 +224,10 @@ const Index = () => {
                 max="10"
                 required
                 className={`w-full ${errors.tickets ? 'border-red-500' : ''}`}
+                aria-invalid={errors.tickets ? "true" : "false"}
+                aria-describedby={errors.tickets ? "tickets-error" : undefined}
               />
-              {errors.tickets && <p className="text-red-500 text-sm mt-1">{errors.tickets}</p>}
+              {errors.tickets && <p id="tickets-error" className="text-red-500 text-sm mt-1">{errors.tickets}</p>}
             </div>
             <Button type="submit" className="w-full">Köp Biljetter</Button>
           </form>
@@ -240,8 +246,10 @@ const Index = () => {
                 onChange={handleContactInputChange}
                 required
                 className={`w-full ${contactErrors.name ? 'border-red-500' : ''}`}
+                aria-invalid={contactErrors.name ? "true" : "false"}
+                aria-describedby={contactErrors.name ? "contact-name-error" : undefined}
               />
-              {contactErrors.name && <p className="text-red-500 text-sm mt-1">{contactErrors.name}</p>}
+              {contactErrors.name && <p id="contact-name-error" className="text-red-500 text-sm mt-1">{contactErrors.name}</p>}
             </div>
             <div>
               <label htmlFor="contact-email" className="block mb-2 font-medium">E-post:</label>
@@ -253,8 +261,10 @@ const Index = () => {
                 onChange={handleContactInputChange}
                 required
                 className={`w-full ${contactErrors.email ? 'border-red-500' : ''}`}
+                aria-invalid={contactErrors.email ? "true" : "false"}
+                aria-describedby={contactErrors.email ? "contact-email-error" : undefined}
               />
-              {contactErrors.email && <p className="text-red-500 text-sm mt-1">{contactErrors.email}</p>}
+              {contactErrors.email && <p id="contact-email-error" className="text-red-500 text-sm mt-1">{contactErrors.email}</p>}
             </div>
             <div>
               <label htmlFor="message" className="block mb-2 font-medium">Meddelande:</label>
@@ -266,8 +276,10 @@ const Index = () => {
                 rows="4"
                 required
                 className={`w-full ${contactErrors.message ? 'border-red-500' : ''}`}
+                aria-invalid={contactErrors.message ? "true" : "false"}
+                aria-describedby={contactErrors.message ? "message-error" : undefined}
               />
-              {contactErrors.message && <p className="text-red-500 text-sm mt-1">{contactErrors.message}</p>}
+              {contactErrors.message && <p id="message-error" className="text-red-500 text-sm mt-1">{contactErrors.message}</p>}
             </div>
             <Button type="submit" className="w-full">Skicka Meddelande</Button>
           </form>
@@ -284,6 +296,7 @@ const Index = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 p-4 bg-secondary rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors duration-200"
+                aria-label={`Besök vår ${link.name} sida`}
               >
                 {link.icon}
                 <span className="hidden md:inline">{link.name}</span>

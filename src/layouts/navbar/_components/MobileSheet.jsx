@@ -6,18 +6,19 @@ import { NavItem } from "./NavItem";
 export const MobileSheet = ({ navItems }) => (
   <Sheet>
     <SheetTrigger asChild>
-      <Button variant="outline" size="icon" className="shrink-0 md:hidden">
-        <Menu className="h-5 w-5" />
+      <Button variant="outline" size="icon" className="shrink-0 md:hidden" aria-label="Öppna navigeringsmeny">
+        <Menu className="h-5 w-5" aria-hidden="true" />
         <span className="sr-only">Växla navigeringsmeny</span>
       </Button>
     </SheetTrigger>
     <SheetContent side="left">
-      <nav className="grid gap-6 text-lg font-medium">
+      <nav className="grid gap-6 text-lg font-medium" aria-label="Mobilnavigering">
         <NavItem
           to="/"
           className="flex items-center gap-2 text-lg font-semibold"
+          aria-label="Hem"
         >
-          <Package2 className="h-6 w-6" />
+          <Package2 className="h-6 w-6" aria-hidden="true" />
           <span className="sr-only">Burboun</span>
         </NavItem>
         {navItems.map((item) => (
