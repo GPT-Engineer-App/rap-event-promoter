@@ -16,6 +16,13 @@ const Index = () => {
   });
   const [errors, setErrors] = useState({});
 
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [contactErrors, setContactErrors] = useState({});
+
   const artists = [
     {
       name: "MC Rhyme",
@@ -66,6 +73,42 @@ const Index = () => {
       toast.success("Tickets purchased successfully!");
       // Reset form after successful submission
       setFormData({ name: "", email: "", tickets: "" });
+    } else {
+      toast.error("Please correct the errors in the form.");
+    }
+  };
+
+  const handleContactInputChange = (e) => {
+    const { name, value } = e.target;
+    setContactForm((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    // Clear the error for this field as the user types
+    setContactErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
+  };
+
+  const validateContactForm = () => {
+    const newErrors = {};
+    if (!contactForm.name.trim()) newErrors.name = "Name is required";
+    if (!contactForm.email.trim()) newErrors.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(contactForm.email)) newErrors.email = "Email is invalid";
+    if (!contactForm.message.trim()) newErrors.message = "Message is required";
+    setContactErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+    if (validateContactForm()) {
+      // Here you would typically send the form data to your backend
+      console.log("Contact form submitted:", contactForm);
+      toast.success("Message sent successfully!");
+      // Reset form after successful submission
+      setContactForm({ name: "", email: "", message: "" });
     } else {
       toast.error("Please correct the errors in the form.");
     }
@@ -186,18 +229,45 @@ const Index = () => {
 
         <section id="contact" className="mb-16 bg-card p-8 rounded-lg shadow-lg">
           <h2 className="text-3xl font-semibold mb-6 text-primary">Contact Us</h2>
-          <form className="space-y-6">
+          <form onSubmit={handleContactSubmit} className="space-y-6">
             <div>
               <label htmlFor="contact-name" className="block mb-2 font-medium">Name:</label>
-              <Input type="text" id="contact-name" name="contact-name" required className="w-full" />
+              <Input
+                type="text"
+                id="contact-name"
+                name="name"
+                value={contactForm.name}
+                onChange={handleContactInputChange}
+                required
+                className={`w-full ${contactErrors.name ? 'border-red-500' : ''}`}
+              />
+              {contactErrors.name && <p className="text-red-500 text-sm mt-1">{contactErrors.name}</p>}
             </div>
             <div>
               <label htmlFor="contact-email" className="block mb-2 font-medium">Email:</label>
-              <Input type="email" id="contact-email" name="contact-email" required className="w-full" />
+              <Input
+                type="email"
+                id="contact-email"
+                name="email"
+                value={contactForm.email}
+                onChange={handleContactInputChange}
+                required
+                className={`w-full ${contactErrors.email ? 'border-red-500' : ''}`}
+              />
+              {contactErrors.email && <p className="text-red-500 text-sm mt-1">{contactErrors.email}</p>}
             </div>
             <div>
               <label htmlFor="message" className="block mb-2 font-medium">Message:</label>
-              <Textarea id="message" name="message" rows="4" required className="w-full" />
+              <Textarea
+                id="message"
+                name="message"
+                value={contactForm.message}
+                onChange={handleContactInputChange}
+                rows="4"
+                required
+                className={`w-full ${contactErrors.message ? 'border-red-500' : ''}`}
+              />
+              {contactErrors.message && <p className="text-red-500 text-sm mt-1">{contactErrors.message}</p>}
             </div>
             <Button type="submit" className="w-full">Send Message</Button>
           </form>
