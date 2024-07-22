@@ -2,15 +2,15 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Package2 } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import { navItems } from "../App";
-import { SidebarNavLink } from "./_components_sidebar/SidebarNavLink";
+import { navItems } from "../../../nav-items";
+import { SidebarNavLink } from "./SidebarNavLink";
 
 export const MobileSidebar = () => (
   <Sheet>
     <SheetTrigger asChild>
       <Button variant="outline" size="icon" className="shrink-0 md:hidden">
         <Menu className="h-5 w-5" />
-        <span className="sr-only">Toggle navigation menu</span>
+        <span className="sr-only">Växla navigeringsmeny</span>
       </Button>
     </SheetTrigger>
     <SheetContent side="left" className="flex flex-col">
@@ -20,7 +20,7 @@ export const MobileSidebar = () => (
           className="flex items-center gap-2 text-lg font-semibold mb-4"
         >
           <Package2 className="h-6 w-6" />
-          <span className="sr-only">Acme Inc</span>
+          <span className="sr-only">Burboun</span>
         </NavLink>
         {navItems.map((item) => (
           <SidebarNavLink key={item.to} to={item.to}>
