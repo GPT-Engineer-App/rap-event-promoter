@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CalendarIcon, Clock, MapPin } from "lucide-react";
+import { CalendarIcon, Clock, MapPin, Facebook, Twitter, Instagram, Youtube } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
 
@@ -39,6 +39,13 @@ const Index = () => {
       image: "/images/lyrical-genius.jpg",
       bio: "Lyrical Genius lives up to his name with introspective verses and thought-provoking lyrics. His albums have garnered critical acclaim.",
     },
+  ];
+
+  const socialMediaLinks = [
+    { name: "Facebook", url: "https://facebook.com/rapatevent", icon: <Facebook className="w-6 h-6" /> },
+    { name: "Twitter", url: "https://twitter.com/rapatevent", icon: <Twitter className="w-6 h-6" /> },
+    { name: "Instagram", url: "https://instagram.com/rapatevent", icon: <Instagram className="w-6 h-6" /> },
+    { name: "YouTube", url: "https://youtube.com/rapatevent", icon: <Youtube className="w-6 h-6" /> },
   ];
 
   const handleInputChange = (e) => {
@@ -276,10 +283,19 @@ const Index = () => {
         <section id="social-media" className="mb-16 bg-card p-8 rounded-lg shadow-lg">
           <h2 className="text-3xl font-semibold mb-6 text-primary">Follow Us</h2>
           <p className="mb-6 text-lg">Stay connected and get the latest updates:</p>
-          <div className="space-y-4">
-            <a href="https://facebook.com/yourpage" target="_blank" rel="noopener noreferrer" className="block text-blue-600 hover:text-blue-800 transition-colors duration-200 text-lg">Facebook</a>
-            <a href="https://twitter.com/yourpage" target="_blank" rel="noopener noreferrer" className="block text-blue-400 hover:text-blue-600 transition-colors duration-200 text-lg">Twitter</a>
-            <a href="https://instagram.com/yourpage" target="_blank" rel="noopener noreferrer" className="block text-pink-600 hover:text-pink-800 transition-colors duration-200 text-lg">Instagram</a>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {socialMediaLinks.map((link, index) => (
+              <a
+                key={index}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 p-4 bg-secondary rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors duration-200"
+              >
+                {link.icon}
+                <span>{link.name}</span>
+              </a>
+            ))}
           </div>
         </section>
       </main>
